@@ -1,5 +1,1 @@
-    <path
-       style="fill:none;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 9.8273803,98.184493 c 0,0 9.8273787,-40.821406 47.6249987,-46.869023 37.797604,-6.047618 58.208321,28.726172 37.797604,32.505932 -20.410698,3.779757 -74.083319,27.970228 -58.96427,56.696418 15.119045,28.72619 47.624999,49.13691 47.624999,49.13691"
-       id="path3715"
-       inkscape:connector-curvature="0" />
+<path d="m 90.714276,176.04758 c 0,0 -30.994041,-6.80357 -32.505944,-31.74999 C 56.696426,119.35116 209.39879,148.8333 168.57736,58.874994 127.75594,-31.083336 52.916665,25.613092 52.916665,25.613092" id="path3713" inkscape:connector-curvature="0" style="fill:none;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"></path>
