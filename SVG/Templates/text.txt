@@ -1,1 +1,0 @@
-<text x="{x}" y="{y}" font-size="60{font_size}" text-anchor="{anchor}" fill="{fill}">{text}</text>

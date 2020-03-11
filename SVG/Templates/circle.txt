@@ -1,1 +1,0 @@
-<circle cx="{x}" cy="{y}" r="{radius}" fill="{fill}" />
