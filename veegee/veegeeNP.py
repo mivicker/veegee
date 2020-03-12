@@ -27,7 +27,6 @@ def points_to_numpy(dpoints):
     return points_array
 
 """---------------------- classes to build up SVG"""
-
 class DPoint:
     def __init__(self, x, y):
         self.x = x
