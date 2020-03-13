@@ -1,2 +1,0 @@
-#+title:veegee reedmee
-* A library for manipulating svg files using numpy 
