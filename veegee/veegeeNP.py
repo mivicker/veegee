@@ -4,7 +4,7 @@ import re
 from bs4 import BeautifulSoup
 
 """---------------------- from SVG to numpy-based object"""
-def list_elements(svg_string):
+def list_paths(svg_string):
     soup = BeautifulSoup(svg_string, "html.parser")
     return [str(path).strip() for path in soup.find_all("path")]
 
@@ -12,10 +12,39 @@ def extract_dstring(path_string):
     pattern = r' d="([^"]*)' #returns " d=" until the closing quotes
     return re.findall(pattern, path_string)[0]
 
+command_lens = {
+    "m":1,
+    "M":1,
+    "c":3,
+    "C":3,
+    "l":1,
+    "L":1,
+    "h":1,
+    "H":1,
+    "z":0,
+    "Z":0,
+    "a":7,
+    "A":7,
+    "q":2,
+    "Q":2
+}
+
+command_counts = {command:0 for command in command_lens.keys()}
+
 def split_commands_points(path_string):
     dstring = extract_dstring(path_string)
     dstring_list = dstring.split()
-    commands = [command for command in dstring_list if command.isalpha()]
+
+    commands = []
+    counter = 0
+    for item in dstring_list:
+        if counter == 0:
+            if item.isalpha():
+                current_command = item
+                continue
+            commands.append(current_command)
+            counter = command_lens[current_command]
+        counter -= 1
     points = [point for point in dstring_list if not point.isalpha()]
     return commands, points
 
@@ -25,6 +54,21 @@ def points_to_numpy(dpoints):
         vals = point.split(",")
         points_array[row] = [float(vals[0]), float(vals[1])]
     return points_array
+
+def commands_to_indicies(commands):
+    global command_counts
+    command_indicies = {}
+    index = 0
+    current_command = 'Null'
+    for command in commands:
+        if command != current_command:
+            current_command = command
+            command_len = command_lens[command]
+        command_end = index + command_len
+        command_indicies[command + str(command_counts[command])] = (index, command_end)
+        command_counts[command] += 1
+        index = command_end
+    return command_indicies
 
 """---------------------- classes to build up SVG"""
 class DPoint:
@@ -90,7 +134,7 @@ class Path:
     def __len__(self):
         #This will return the lenth of the path based on # of elements.
         pass
-
+"""
 with open("Templates/svgmain.txt", "r", encoding='utf-8') as f:
      svg_body_template = f.read()
 
@@ -106,14 +150,16 @@ class SVG_file: #Rename this
         decoded = codecs.escape_decode(bytes(('\n\t' + shapes), "utf-8"))[0].decode("utf-8")
         svg_body = svg_body_template.format(width = "500", height="300", body=decoded)
         return svg_body
+"""
+
 
 """---------------------- major veegee classes"""
 class veegeePath:
     def __init__(self, path_string):
-        self.commands, points = split_commands_points(path_string):
+        self.commands, points = split_commands_points(path_string)
         self.points_array = points_to_numpy(points)
+        self.command_indicies = commands_to_indicies(self.commands)
 
 class veegee:
-    pass
-
-
+    def __init__(self, svg_file):
+        pass
